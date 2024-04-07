@@ -1,21 +1,42 @@
 {
-  "name": "literal-jsx-packages",
-  "private": true,
-  "workspaces": [
-    "packages/*"
+  "name": "@literal-jsx/parser",
+  "version": "0.1.7",
+  "description": "An example parser implementation for Literal JSX using nearley.js + moo",
+  "main": "lib/literal-jsx-parser.js",
+  "author": "Kelley van Evert <hello@klve.nl>",
+  "homepage": "https://literal-jsx.org/",
+  "repository": "github:kelleyvanevert/literal-jsx",
+  "type": "module",
+  "keywords": [
+    "literal-jsx",
+    "ljsx",
+    "jsx",
+    "markup",
+    "json",
+    "nearley",
+    "moo"
   ],
+  "license": "MIT",
+  "dependencies": {
+    "deepmerge": "^4.3.1",
+    "moo": "^0.5.2",
+    "nearley": "^2.20.1",
+    "typescipt": "^1.0.0"
+  },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "babel-jest": "^24.8.0",
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "lerna": "^3.14.1"
+    "@types/moo": "^0.5.9",
+    "@types/nearley": "^2.11.5",
+    "cjs-to-es6": "^2.0.1",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.4",
+    "vitest": "^1.4.0"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap --use-workspaces"
+    "clean": "rimraf lib",
+    "test": "vitest",
+    "build": "tsc",
+    "build:grammar": "nearleyc src/grammar.ne -o src/grammar.js; cjs-to-es6 src/grammar.js; sed -i \"s/'.\\/lexer'/'.\\/lexer.ts'/\" src/grammar.js",
+    "prepare": "yarn run clean && yarn run test && yarn run build"
   },
-  "dependencies": {
-    "querystringify": "^2.0.0"
-  }
+  "packageManager": "yarn@4.1.1"
 }

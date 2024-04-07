@@ -1,4 +1,6 @@
-const { makeLexer, parseAST, parseValue } = require(".");
+import { makeLexer, parseAST, parseValue } from "./index.js";
+import { describe, it, expect } from "vitest";
+
 const lexer = makeLexer();
 
 const W_NUMBER = `<Bla> 42 </Bla>`;
@@ -22,7 +24,7 @@ const COMPLICATED = `
           name="Hello"
           someData={{ "a": [24, <a />] }}
           false={false}
-          implicitlyTrue
+          implicitlyTrue\
           explicitlyNull={null}
         >
           Plain text is always a bit <svg:yep>boring</svg:yep>

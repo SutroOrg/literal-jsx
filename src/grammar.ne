@@ -3,6 +3,8 @@
 
 # Tested with nearleyc v2.16.0
 
+@preprocessor esmodule
+
 @{%
 
 const merge = require("deepmerge");

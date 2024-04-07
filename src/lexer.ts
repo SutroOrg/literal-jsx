@@ -1,6 +1,6 @@
 import moo from "moo";
 
-const identifier = require("./JSIdentifier");
+import identifier from "./JSIdentifier.js";
 const space = { match: /\s+/, lineBreaks: true };
 const string = /"(?:\\["bfnrt\/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/;
 
@@ -22,15 +22,15 @@ export default () =>
       codeblock_backticks: { match: "```", push: "mdCodeBlock" },
       inlinecode_backtick: { match: "`", push: "mdInlineCode" },
       plaintext: { match: /(?:(?!(?:\`|\{|\}|<))[^])+/, lineBreaks: true },
-      "<": { match: "<", push: "jsxTag" }
+      "<": { match: "<", push: "jsxTag" },
     },
     mdInlineCode: {
       inlinecode_backtick: { match: "`", pop: 1 },
-      plaintext: { match: /(?:(?!(?:`))[^])+/, lineBreaks: true }
+      plaintext: { match: /(?:(?!(?:`))[^])+/, lineBreaks: true },
     },
     mdCodeBlock: {
       codeblock_backticks: { match: "```", pop: 1 },
-      plaintext: { match: /(?:(?!(?:```))[^])+/, lineBreaks: true }
+      plaintext: { match: /(?:(?!(?:```))[^])+/, lineBreaks: true },
     },
     jsxTag: {
       space,
@@ -42,14 +42,14 @@ export default () =>
       selfclose: { match: /\/\s*>/, pop: 1, lineBreaks: true },
       "/": "/",
       ">": { match: ">", next: "jsxChild" },
-      "{": { match: "{", push: "jsonValue" }
+      "{": { match: "{", push: "jsonValue" },
     },
     jsxClosingTag: {
       space,
       ".": ".",
       ":": ":",
       identifier,
-      ">": { match: ">", pop: 1 }
+      ">": { match: ">", pop: 1 },
     },
     jsxChild: {
       "{": { match: "{", push: "jsonValue" },
@@ -57,6 +57,6 @@ export default () =>
       "<": { match: "<", push: "jsxTag" },
       codeblock_backticks: { match: "```", push: "mdCodeBlock" },
       inlinecode_backtick: { match: "`", push: "mdInlineCode" },
-      plaintext: { match: /(?:(?!(?:\`|\{|<))[^])+/, lineBreaks: true }
-    }
+      plaintext: { match: /(?:(?!(?:\`|\{|<))[^])+/, lineBreaks: true },
+    },
   });
